@@ -23,6 +23,12 @@ public class UI : MonoBehaviour
         _bird.Death += DeathScreen;
         _bird.TubePassed += PlusScore;
     }
+    private void OnDisable()
+    {
+        _bird.Death -= DeathScreen;
+        _bird.TubePassed -= PlusScore;
+    }
+
     private void EndDeathScreen(Animation textAnimation)
     {
         var Text = _scoreText.GetComponent<Text>();

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4115868383841291094}
   - component: {fileID: 5847892668555336343}
   - component: {fileID: 2425650100750842746}
+  - component: {fileID: 6841244480944861568}
   m_Layer: 5
   m_Name: Bottom tube
   m_TagString: Untagged
@@ -157,6 +158,20 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &6841244480944861568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115868383841291082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13434df2d00d54c42bfb68d22c2bd52d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 2425650100750842746}
+  _spriteRenderer: {fileID: 4115868383841291094}
 --- !u!1 &4115868385442853452
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,14 +218,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea14127cee7e53546b1b8043b242f8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bottomTube: {fileID: 4115868383841291082}
-  _upperTube: {fileID: 7104714856450648827}
+  _bottomTube: {fileID: 6841244480944861568}
+  _upperTube: {fileID: 969810841560213637}
   _minTubeSize: 5
-  _standartWidth: 5
   _minHoleSize: 8
-  _maxHoleSize: 12
+  _maxHoleSize: 10
   _distance: 27
-  tubesSpeed: 0.28
+  _bird: {fileID: 0}
+  _ui: {fileID: 0}
+  _tubeNumber: 1
+  _tubesStadartSpeed: 0
   _behindScreenTubeEndPosition: {x: -86, y: 0, z: 0}
   _behindScreenTubeStartPosition: {x: 150, y: 0, z: 0}
 --- !u!68 &343072598826526639
@@ -247,6 +264,7 @@ GameObject:
   - component: {fileID: 7104714856450648807}
   - component: {fileID: 765725865121905446}
   - component: {fileID: 8804017280835230411}
+  - component: {fileID: 969810841560213637}
   m_Layer: 5
   m_Name: Upper tube
   m_TagString: Untagged
@@ -392,3 +410,17 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &969810841560213637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7104714856450648827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13434df2d00d54c42bfb68d22c2bd52d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 8804017280835230411}
+  _spriteRenderer: {fileID: 7104714856450648807}

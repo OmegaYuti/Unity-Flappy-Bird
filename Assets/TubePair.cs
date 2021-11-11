@@ -1,59 +1,55 @@
 using UnityEngine;
 
 
-public class TubeParent : MonoBehaviour
+public class TubePair : MonoBehaviour
 {
     [Header("Child tubes parameters")]
-    [SerializeField] private GameObject _bottomTube;
-    [SerializeField] private GameObject _upperTube;
+    [SerializeField] private Tube _bottomTube;
+    [SerializeField] private Tube _upperTube;
     [SerializeField] private float _minTubeSize = 5;
-    [SerializeField] private float _standartWidth = 5;
-    [SerializeField] private int _minHoleSize = 8;
-    [SerializeField] private int _maxHoleSize = 12;
+    [SerializeField] private float _minHoleSize = 8;
+    [SerializeField] private float _maxHoleSize = 12;
     [SerializeField] private int _distance = 27;
 
     [Header("Input parameters")]
     [SerializeField] private Bird _bird;
-    [SerializeField] private UI _UI;
+    [SerializeField] private UI _ui;
 
     [Header("Tubes parameters")]
     [SerializeField] private int _tubeNumber = 1;
 
     [Header("Tubes movement parameters")]
-    [SerializeField] private float _tubesSpeed = 0;
+    [SerializeField] private float _tubesStadartSpeed = 0;
     [SerializeField] private Vector3 _behindScreenTubeEndPosition;
     [SerializeField] private Vector3 _behindScreenTubeStartPosition;
 
-    private SpriteRenderer _upperTubeSpriteRenderer;
-    private SpriteRenderer _bottomTubeSpriteRenderer;
-    private EdgeCollider2D _upperTubeEdgeCollider;
-    private EdgeCollider2D _bottomTubeEdgeCollider;
-
+    private float tubeCurrectSpeed;
     private void Start()
     {
-        _upperTubeEdgeCollider = _upperTube.GetComponent<EdgeCollider2D>();
-        _bottomTubeEdgeCollider = _bottomTube.GetComponent<EdgeCollider2D>();
-
-        _upperTubeSpriteRenderer = _upperTube.GetComponent<SpriteRenderer>();
-        _bottomTubeSpriteRenderer = _bottomTube.GetComponent<SpriteRenderer>();
-
         _bird.StartMoving += ParametersMovingStart;
-        _UI.EndDeathMessage += PlaceTubes;
+        _ui.EndDeathMessage += PlaceTubes;
 
         RandomTubes();
     }
+    private void OnDisable()
+    {
+        _bird.StartMoving -= ParametersMovingStart;
+        _ui.EndDeathMessage -= PlaceTubes;
+    }
     private void FixedUpdate()
     {
+        if (tubeCurrectSpeed == 0)
+            return;
         MoveTubes();
     }
 
     private void ParametersMovingStart()
     {
-        _tubesSpeed = 0.5f;
+        tubeCurrectSpeed = _tubesStadartSpeed;
     }
     private void PlaceTubes()
     {
-        _tubesSpeed = 0;
+        tubeCurrectSpeed = 0;
 
         var position = Vector3.right * 50 * _tubeNumber;
         transform.localPosition = position;
@@ -62,7 +58,7 @@ public class TubeParent : MonoBehaviour
     }
     private void MoveTubes()
     {
-        var nextPostion = transform.localPosition + Vector3.left * _tubesSpeed;
+        var nextPostion = transform.localPosition + Vector3.left * tubeCurrectSpeed;
         transform.localPosition = nextPostion;
 
         if (transform.localPosition.x - _behindScreenTubeEndPosition.x > 0)
@@ -85,11 +81,7 @@ public class TubeParent : MonoBehaviour
         var upperTubeEdgeHeight = upperTubeHeight - _minTubeSize;
         var bottomTubeEdgeHeight = bottomTubeHeight - _minTubeSize;
 
-        _upperTubeSpriteRenderer.size = Vector2.up * upperTubeHeight + Vector2.right * _standartWidth;
-        _bottomTubeSpriteRenderer.size = Vector2.up * bottomTubeHeight + Vector2.right * _standartWidth;
-
-        _upperTubeEdgeCollider.offset = Vector2.up * upperTubeEdgeHeight;
-        _bottomTubeEdgeCollider.offset = Vector2.up * bottomTubeEdgeHeight;
+        _upperTube.ChangeHeight(upperTubeHeight, upperTubeEdgeHeight);
+        _bottomTube.ChangeHeight(bottomTubeHeight, bottomTubeEdgeHeight);
     }
-
 }
