@@ -1,56 +1,34 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] private Bird _bird;
-    [SerializeField] private GameObject _scoreText;
+    [SerializeField] TextScore _textScore;
+    [SerializeField] string _animationName;
 
-    public event Action EndDeathMessage;
-
-    private int _score = 0;
+    public event Action AnimDeathEnd;
 
     private void FixedUpdate()
     {
-        var textAnimation = _scoreText.GetComponent<Animation>();
-        if (textAnimation.enabled)
-            return;
-        EndDeathScreen(textAnimation);
+        _textScore.DeathScreenEnd += DeathEnd;
     }
-    private void Start()
+    private void OnDestroy()
     {
-        _bird.Death += DeathScreen;
-        _bird.TubePassed += PlusScore;
-    }
-    private void OnDisable()
-    {
-        _bird.Death -= DeathScreen;
-        _bird.TubePassed -= PlusScore;
+        _textScore.DeathScreenEnd -= DeathEnd;
     }
 
-    private void EndDeathScreen(Animation textAnimation)
+    public void DisplayScore(int score)
     {
-        var Text = _scoreText.GetComponent<Text>();
-
-        textAnimation.enabled = true;
-
-        _score = 0;
-        Text.text = "Score: " + _score;
-
-        EndDeathMessage();
+        var text = "Score: " + score;
+        _textScore.SetTextScore(text);
     }
-    private void DeathScreen()
+    private void DeathEnd()
     {
-        var textAnimation = _scoreText.GetComponent<Animation>();
-
-        textAnimation.Play("Death Animation");
+        AnimDeathEnd();
+        DisplayScore(0);
     }
-    private void PlusScore()
+    public void DeathStart()
     {
-        var Text = _scoreText.GetComponent<Text>();
-
-        _score += 1;
-        Text.text = "Score: " + _score;
+        _textScore.PlayAnimation(_animationName);
     }
 }

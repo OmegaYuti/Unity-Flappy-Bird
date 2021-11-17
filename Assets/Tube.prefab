@@ -224,10 +224,7 @@ MonoBehaviour:
   _minHoleSize: 8
   _maxHoleSize: 10
   _distance: 27
-  _bird: {fileID: 0}
-  _ui: {fileID: 0}
-  _tubeNumber: 1
-  _tubesStadartSpeed: 0
+  _tubesStadartSpeed: 1.45
   _behindScreenTubeEndPosition: {x: -86, y: 0, z: 0}
   _behindScreenTubeStartPosition: {x: 150, y: 0, z: 0}
 --- !u!68 &343072598826526639

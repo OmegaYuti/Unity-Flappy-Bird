@@ -11,13 +11,6 @@ public class TubePair : MonoBehaviour
     [SerializeField] private float _maxHoleSize = 12;
     [SerializeField] private int _distance = 27;
 
-    [Header("Input parameters")]
-    [SerializeField] private Bird _bird;
-    [SerializeField] private UI _ui;
-
-    [Header("Tubes parameters")]
-    [SerializeField] private int _tubeNumber = 1;
-
     [Header("Tubes movement parameters")]
     [SerializeField] private float _tubesStadartSpeed = 0;
     [SerializeField] private Vector3 _behindScreenTubeEndPosition;
@@ -26,37 +19,29 @@ public class TubePair : MonoBehaviour
     private float tubeCurrectSpeed;
     private void Start()
     {
-        _bird.StartMoving += ParametersMovingStart;
-        _ui.EndDeathMessage += PlaceTubes;
-
-        RandomTubes();
-    }
-    private void OnDisable()
-    {
-        _bird.StartMoving -= ParametersMovingStart;
-        _ui.EndDeathMessage -= PlaceTubes;
+        RandomTube();
     }
     private void FixedUpdate()
     {
         if (tubeCurrectSpeed == 0)
             return;
-        MoveTubes();
+        MoveTube();
     }
 
-    private void ParametersMovingStart()
+    public void MovingStart()
     {
         tubeCurrectSpeed = _tubesStadartSpeed;
     }
-    private void PlaceTubes()
+    public void PlaceTube(int distance)
     {
         tubeCurrectSpeed = 0;
 
-        var position = Vector3.right * 50 * _tubeNumber;
+        var position = Vector3.right * distance;
         transform.localPosition = position;
 
-        RandomTubes();
+        RandomTube();
     }
-    private void MoveTubes()
+    private void MoveTube()
     {
         var nextPostion = transform.localPosition + Vector3.left * tubeCurrectSpeed;
         transform.localPosition = nextPostion;
@@ -64,10 +49,10 @@ public class TubePair : MonoBehaviour
         if (transform.localPosition.x - _behindScreenTubeEndPosition.x > 0)
             return;
 
-        RandomTubes();
+        RandomTube();
         transform.localPosition = _behindScreenTubeStartPosition;
     }
-    private void RandomTubes()
+    private void RandomTube()
     {
         var holeSize = Random.Range(_minHoleSize, _maxHoleSize + 1);
 
