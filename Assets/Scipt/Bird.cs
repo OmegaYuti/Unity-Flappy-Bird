@@ -4,9 +4,6 @@ using UnityEngine.EventSystems;
 
 public class Bird : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private UI _ui;
-
     [Header("Parameters")]
     [SerializeField] private float _maxRotationAngle = 0.8f;
     [SerializeField] private float _velocityScale = 0.02f;

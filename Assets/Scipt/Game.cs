@@ -8,7 +8,7 @@ public class Game : MonoBehaviour
     [SerializeField] private GameObject _bird;
     [SerializeField] private Vector3 _birdStartPosition;
     [Header("UI")]
-    [SerializeField] private UI _ui;
+    [SerializeField] private ScoreView _textScore;
     [Header("Tubes")]
     [SerializeField] private Tubes _tubes;
 
@@ -31,16 +31,12 @@ public class Game : MonoBehaviour
         _birdClass.Death += BirdDeathStart;
         _birdClass.TubePassed += PlusScore;
 
-        _ui.AnimDeathEnd += BirdDeathEnd;
-
         PlaceTubesStartPosition();
     }
     private void OnDestroy()
     {
         _birdClass.Death -= BirdDeathStart;
         _birdClass.TubePassed -= PlusScore;
-
-        _ui.AnimDeathEnd -= BirdDeathEnd;
     }
     private void Update()
     {
@@ -82,15 +78,16 @@ public class Game : MonoBehaviour
     private void PlusScore()
     {
         _score++;
-        _ui.DisplayScore(_score);
+        _textScore.Update(_score);
     }
-    
     private void BirdDeathStart()
     {
         _gameInProgress = false;
         _birdCollider.enabled = false;
 
-        _ui.DeathStart();
+        _tubes.StopMoving();
+
+        _textScore.PlayAnimation(BirdDeathEnd);
     }
     private void BirdDeathEnd()
     {
@@ -99,6 +96,10 @@ public class Game : MonoBehaviour
         PlaceTubesStartPosition();
 
         SetBirdStartPos();
+
+        _score = 0;
+
+        _textScore.Update(_score);
     }
     private void SetBirdStartPos()
     {
@@ -111,10 +112,10 @@ public class Game : MonoBehaviour
 
     private void TubesActiveMoving()
     {
-        _tubes.StartTubesMoving();
+        _tubes.StartMoving();
     }
     private void PlaceTubesStartPosition()
     {
-        _tubes.PlaceTubes();
+        _tubes.Spawn();
     }
 }

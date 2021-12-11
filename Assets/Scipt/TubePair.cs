@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class TubePair : MonoBehaviour
 {
     [Header("Child tubes parameters")]
@@ -12,47 +11,32 @@ public class TubePair : MonoBehaviour
     [SerializeField] private int _distance = 27;
 
     [Header("Tubes movement parameters")]
-    [SerializeField] private float _tubesStadartSpeed = 0;
+    [SerializeField] private float _tubesStandartSpeed = 0;
     [SerializeField] private Vector3 _behindScreenTubeEndPosition;
     [SerializeField] private Vector3 _behindScreenTubeStartPosition;
 
-    private float tubeCurrectSpeed;
+
     private void Start()
     {
-        RandomTube();
-    }
-    private void FixedUpdate()
-    {
-        if (tubeCurrectSpeed == 0)
-            return;
-        MoveTube();
+        RandomizeHeight();
     }
 
-    public void MovingStart()
+    public void Place(Vector3 position)
     {
-        tubeCurrectSpeed = _tubesStadartSpeed;
-    }
-    public void PlaceTube(int distance)
-    {
-        tubeCurrectSpeed = 0;
-
-        var position = Vector3.right * distance;
         transform.localPosition = position;
 
-        RandomTube();
+        RandomizeHeight();
     }
-    private void MoveTube()
+    public void Move(float offset)
     {
-        var nextPostion = transform.localPosition + Vector3.left * tubeCurrectSpeed;
+        var nextPostion = transform.localPosition + Vector3.left * offset;
         transform.localPosition = nextPostion;
 
-        if (transform.localPosition.x - _behindScreenTubeEndPosition.x > 0)
-            return;
-
-        RandomTube();
-        transform.localPosition = _behindScreenTubeStartPosition;
+        var isOutOfScreen = transform.position.x <= _behindScreenTubeEndPosition.x;
+        if (isOutOfScreen)
+            Place(_behindScreenTubeStartPosition);
     }
-    private void RandomTube()
+    private void RandomizeHeight()
     {
         var holeSize = Random.Range(_minHoleSize, _maxHoleSize + 1);
 

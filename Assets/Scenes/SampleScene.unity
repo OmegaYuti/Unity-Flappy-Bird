@@ -166,9 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6cdf34fbe665a04188eba27b1c18d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tubePrefab: {fileID: 4115868385442853452, guid: df76c30c56328db4fb646a189ad0d939, type: 3}
+  _tubePairPrefab: {fileID: 4115868385442853454, guid: df76c30c56328db4fb646a189ad0d939, type: 3}
   _tubesCount: 5
   _tubesBetweenDistance: 50
+  _speed: 1.5
 --- !u!1 &405671981
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176e36cd0aee6084eb3ee507c3098ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ui: {fileID: 807710557}
   _maxRotationAngle: 30
   _velocityScale: 0.02
   _jumpForce: 20000
@@ -480,11 +480,11 @@ Animation:
   m_GameObject: {fileID: 536014567}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 07d4f33fd387c964ea3e1b590baed5a3, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 07d4f33fd387c964ea3e1b590baed5a3, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!114 &536014572
@@ -499,7 +499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9327f496b856fc64380a99e29ef781db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textObject: {fileID: 536014569}
+  _textField: {fileID: 536014569}
+  _textFormat: 'Score: {0}'
   _animation: {fileID: 536014571}
 --- !u!1 &807710552
 GameObject:
@@ -615,7 +616,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textScore: {fileID: 536014572}
-  _animationName: Death Animation
 --- !u!1 &1012797538
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bird: {fileID: 405671981}
   _birdStartPosition: {x: -49.1, y: -9.3, z: 0}
-  _ui: {fileID: 807710557}
+  _textScore: {fileID: 536014572}
   _tubes: {fileID: 4971118}
 --- !u!4 &1647266253
 Transform:

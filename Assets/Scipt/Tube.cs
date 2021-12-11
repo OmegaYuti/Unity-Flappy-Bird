@@ -10,6 +10,7 @@ public class Tube : MonoBehaviour
     public void ChangeHeight(float height, float colliderHeight)
     {
         var width = _spriteRenderer.size.x;
+
         _spriteRenderer.size = Vector2.up * height + Vector2.right * width;
         _collider.offset = Vector2.up * colliderHeight;
     }
